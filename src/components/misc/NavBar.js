@@ -1,39 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { NavLink } from 'react-router-dom';
+class NavBar extends Component {
 
-const NavBar = () => (
-  <nav className="navbar is-light" role="navigation" aria-label="main navigation">
-    <div className="navbar-brand">
-      <a className="navbar-item" href="https://bulma.io">
-        <strong>Bienvenido (nombre_Usuario)</strong>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" className="navbar-menu">
-      <div className="navbar-start">
-        <NavLink className="navbar-item" to="/home" activeClassName="is-active">
-          Home
-        </NavLink>
-
-        <NavLink className="navbar-item" to="/contact" activeClassName="is-active">
-          Contact
-        </NavLink>
-
-        <NavLink className="navbar-item" to="/about" activeClassName="is-active">
-          About
-        </NavLink>
-
-        <NavLink className="navbar-item" to="/profile" activeClassName="is-active">
-          Profile
-        </NavLink>
-
-        <NavLink className="navbar-item" to="/contacts" activeClassName="is-active">
-          Contacts
-        </NavLink>
-      </div>
+  render(){
+    return(
+    <nav className="navbar navbar-expand-lg navbardark bg-dark">
+      <a className="navbar-brand" href="#">Welcome</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+    <i class="fab fa-accessible-icon"></i>
+  
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <a className="nav-link" href="/profile">Profile <span className="sr-only">(current)</span></a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="/my-cars">My Cars</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
     </div>
   </nav>
-);
+  )
+  }
+}
 
 export default NavBar;
