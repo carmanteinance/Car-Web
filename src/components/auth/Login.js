@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import authService from '../../services/AuthService';
 import { Redirect, Link } from 'react-router-dom';
-import { withAuthConsumer } from '../../contexts/AuthStore'
+//import { withAuthConsumer } from '../../contexts/AuthStore'
 
 
 
-const validators = {
+const validations = {
   email: (value) => {
-    let error;
-    if (!value || value === '') {
-      error = 'Email is required';
+    let message;
+    if (!value) {
+      message = 'Email or Password invalid';
       }
-    return error;
+    return message;
   },
   password: (value) => {
-    let error;
+    let message;
     if (!value === '') {
-      error = 'Password is required';
+      message = 'Email or Password invalid';
     }
-      return error;
+      return message;
   }
 }
 
@@ -26,26 +26,28 @@ const validators = {
 class Login extends Component {
 
   state = {
-    user:{
-      email:'',
-      password:''
+    user: {
+      email: '',
+      password: ''
     },
-    errors:{},
+    errors: {
+      email: validations.email(),
+      password: validations.password(),
+    },
     touch: {},
-    isAuthenticate:false
+    isAuthenticated: false
   }
 
   handleChange = (event) => {
-    
     const { name, value } = event.target;
     this.setState({
-      user:{
+      user: {
         ...this.state.user,
         [name]: value
       },
-      errors:{
+      errors: {
         ...this.state.errors,
-        [name]: validators[name] && validators[name](value)
+        [name]: validations[name] && validations[name](value)
       }
     })
   }
@@ -62,13 +64,16 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log ("Entra?")
     if (this.isValid()) {
+      console.log ("Entra aqui")
       authService.authenticate(this.state.user)
         .then(
           (user) => {
-            this.setState({ isAuthenticated: true }, () => {
-              this.props.onUserChange(user);
-            })
+            this.setState({ isAuthenticated: true }, 
+              // () => {
+              // this.props.onUserChange(user);}
+              )
           },
           (error) => {
             const { message, errors } = error.response.data;
@@ -92,6 +97,7 @@ class Login extends Component {
   render() {
 
     const { isAuthenticated, errors, user, touch } =  this.state;
+    
     if (isAuthenticated) {
       return (<Redirect to="/my-profile" />)
     }
@@ -115,7 +121,7 @@ class Login extends Component {
                 <div className="invalid-feedback">{ errors.password }</div>
               </div>
             <button className="btn btn-success" form="login-form" type="submit" disabled={!this.isValid()}> Login </button>
-            <p className="mt-4"><small>Don't have an account yet?!  You can create your account <Link to="/register">here</Link></small></p>
+            <p className="mt-4"><small>Don't have an account yet?!  You can create your account <Link to="/register-user">here</Link></small></p>
             </form>
           </div>
           <div className="col-6 mt-5">

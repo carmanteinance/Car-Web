@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import authService from '../../services/AuthService'
 
+// eslint-disable-next-line no-useless-escape
 const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+// eslint-disable-next-line no-useless-escape
 const PASSWORD_PATTERN = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 
 const validations = {
@@ -100,6 +102,7 @@ export default class Register extends Component {
 
   render() {
     const { isRegistered, errors, user, touch } =  this.state;
+    
     if (isRegistered) {
       return (<Redirect to="/login" />)
     }

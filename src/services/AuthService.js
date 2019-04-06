@@ -2,15 +2,15 @@ import http from './BaseService';
 
 
 const register = user => http.post('/register-user', user)
+  .then(response => response.data)
+
+
+const authenticate = (user) => http.post('/login', user)
   .then(response => {
     console.log('esto es la response', response)
     return response.data
   })
   .catch(error => console.log('doy error, sorry', error));
-
-
-const authenticate = (user) => http.post('/login', user)
-  .then(response => response.data);
 
 
 const getProfile = () => http.get('/profile')
