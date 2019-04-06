@@ -1,0 +1,17 @@
+.main-navbar {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background-color: black;
+ color: white;
+ padding: 16px;
+
+}
+
+.navbar-items {
+  display: flex;
+}
+
+.nav-link {
+  color: white !important;
+}

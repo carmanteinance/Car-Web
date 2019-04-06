@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import authService from '../../services/AuthService'
 
 const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const PASSWORD_PATTERN = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 
 const validations = {
+  name: (value) => {
+    let message;
+    if (!value) {
+      message = 'Name is required';
+    }
+    return message;
+  },
   email: (value) => {
     let message;
     if (!value) {
@@ -18,6 +26,8 @@ const validations = {
     let message;
     if (!value) {
       message = 'Password is required';
+    }else if (!PASSWORD_PATTERN.test(value)) {
+      message = 'The password must contain at least 6 characters, 1 lowercase, 1 uppercase and one number';
     }
     return message;
   },
@@ -26,11 +36,15 @@ const validations = {
 export default class Register extends Component {
   state = {
     user: {
-      usermame: '',
+      name: '',
       email: '',
       password: '',
     },
-    errors: {},
+    errors: {
+      name: validations.name(),
+      email: validations.email(),
+      password: validations.password(),
+    },
     touch: {},
     isRegistered: false
   }
@@ -59,25 +73,25 @@ export default class Register extends Component {
     })
   }
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (this.isValid()) {
-  //     authService.register(this.state.user)
-  //       .then(
-  //         (user) => this.setState({ isRegistered: true }),
-  //         (error) => {
-  //           const { message, errors } = error.response.data;
-  //           this.setState({
-  //             errors: {
-  //               ...this.state.errors,
-  //               ...errors,
-  //               email: !errors && message
-  //             }
-  //           })
-  //         }
-  //       )
-  //   }
-  // }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.isValid()) {
+      authService.register(this.state.user)
+        .then(
+          (user) => this.setState({ isRegistered: true }),
+          (error) => {
+            const { message, errors } = error.response.data;
+            this.setState({
+              errors: {
+                ...this.state.errors,
+                ...errors,
+                email: !errors && message
+              }
+            })
+          }
+        )
+    }
+  }
 
   isValid = () => {
     return !Object.keys(this.state.user)
@@ -99,11 +113,9 @@ export default class Register extends Component {
             </div >
             <form id="register-form" className="mx-5" onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label className="fa fa-user mt-5">  User Name </label>
-                {/* <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                </div> */}
-                <input type="user-name" name="user-name" className={`form-control ${touch.username? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.username} />
+              <label className="fa fa-user">  Name</label>
+                <input type="name" name="name" className={`form-control ${touch.name && errors.name ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.name} />
+                <div className="invalid-feedback">{ errors.name }</div>
               </div>
               <div className="form-group">
                 <label className="fa fa-at">  Email</label>
@@ -117,12 +129,12 @@ export default class Register extends Component {
               </div>
             </form>
         <button className="btn btn-success mx-5 mt-2" form="register-form" type="submit" disabled={!this.isValid()}> Yes, I want to join!</button>
-          </div>
-          <div className="col-6 pt-5 mt-5">
-            <h3>Hello!!</h3>
-            <p className="lead mb-3">Welcome to IronProfile!</p>
-            <p className="mb-1"><small>Wait I have already an account</small></p>
-            <button className="btn btn-primary far fa-hand-point-right" href="/login" > Go To LOGIN </button>
+       </div>
+        <div className="col-6 pt-5">
+           <h3>WELCOME!!</h3>
+            <p className="lead mt-4 mb-2">CarCare is an application that will help you keep track of your car's maintenance.</p>
+            <p className="mt-2"><small>Wait, I have already an account</small></p>
+            <Link className="btn btn-info" to="/login"> <i className="fa fa-hand-point-right mr-2"/>  Go To LOG IN</Link>
           </div>
         </div>
       </div>

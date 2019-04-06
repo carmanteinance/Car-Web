@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const Home = () => (
-  <article className="Home">
-    <h1>CAR></h1>
-  </article>
-);
 
-export default Home;
+
+class Car extends Component {
+
+  render(){
+
+    return(
+    <article className="Home">
+      <h1>CAR</h1>
+    </article>
+
+    )
+  }
+}
+
+
+export default Car;
