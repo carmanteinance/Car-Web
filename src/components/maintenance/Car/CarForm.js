@@ -74,10 +74,6 @@ class CarForm extends Component {
 
   const { isAuthenticated, errors, user} =  this.state;
     
-  if (isAuthenticated) {
-    return (<Redirect to="/my-profile" />)
-  }
-
    return(
 
   //   <div>
@@ -93,23 +89,43 @@ class CarForm extends Component {
   //   />
   // </div>
 
-  <div className="main-board">
-      <div class="form-group">
-      <label for="sel1">Select list:</label>
-      <select class="form-control" id="sel1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+  <div className="jumbotron">
+      <div className="form-group">
+        <label for="sel1">Brand:</label>
+          <select className="form-control" id="sel1">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+      </div>
+      <div className="form-group">
+        <label for="sel1">Model:</label>
+          <select className="form-control" id="sel1">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
       </div>
 
 
-      <label class="radio-inline"><input type="radio" name="optradio"/>Option 1</label>
-      <label class="radio-inline"><input type="radio" name="optradio"/>Option 2</label>
-      <label class="radio-inline"><input type="radio" name="optradio"/>Option 3</label>
+      <label className="radio-inline mx-2"><input type="radio" name="optradio"/> Gasoline</label>
+      <label className="radio-inline mx-2"><input type="radio" name="optradio"/> Diesel</label>
+      <label className="radio-inline mx-2"><input type="radio" name="optradio"/> Hybrid</label>
+      <label className="radio-inline mx-2"><input type="radio" name="optradio"/> Electric</label>
   
+      <form class="form-inline mt-3" action="">
+        <label for="car-number" class="mr-sm-2">Car Number:</label>
+          <input type="car-number" class="form-control mb-2 mr-sm-2" id="car-number"/>
+        <label for="year" class="mr-sm-2">Year:</label>
+          <input type="year" class="form-control mb-2 mr-sm-2" id="year"/>
+        <label for="km" class="mr-sm-2">Kilometers:</label>
+          <input type="km" class="form-control mb-2 mr-sm-2" id="km"/>
+      </form>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
   </div>
+
 
    )
 

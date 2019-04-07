@@ -11,7 +11,8 @@ const listOneCar = car => http.get('/my-cars/:id', car)
   .then(res => Promise.resolve(res.data))
   .catch(error => console.log('doy error, sorry', error))
 
-
+const addCar = car => http.post('/my-cars/newCar ',car)
+  .then (response => response.data)
 
 const updateProfile = (user) => {
   const data = new FormData();
@@ -29,6 +30,7 @@ export default {
   registerCar,
   listCar,
   listOneCar,
+  addCar,
   updateProfile,
   deleteCar
 }
