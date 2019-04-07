@@ -9,6 +9,7 @@ import Car from './components/maintenance/Car/Car';
 import CarForm from './components/maintenance/Car/CarForm';
 import Profile from './components/auth/Profile';
 import Alerts from './components/maintenance/Car/Alerts';
+import Maintenance from './components/maintenance/Maintenance/Maintenance';
 
 import PrivateRoute from './guards/privateRoutes';
 
@@ -29,6 +30,8 @@ class App extends Component {
             <Route exact path="/my-cars" component={Car} />
             <Route exact path="/my-cars/newCar" component={CarForm}/>
             <Route exact path="/alerts" component={Alerts} />
+
+            <Route exact path="/maintenance" component={Maintenance} />
 
             <Redirect to="/login" />
         </Switch>
