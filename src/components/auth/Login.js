@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import authService from '../../services/AuthService';
 import { Redirect, Link } from 'react-router-dom';
-//import { withAuthConsumer } from '../../contexts/AuthStore'
-
+//import { withAuthConsumer } from '../../contexts/AuthStore';
 
 
 const validations = {
@@ -64,16 +63,12 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log ("Entra?")
     if (this.isValid()) {
-      console.log ("Entra aqui")
       authService.authenticate(this.state.user)
         .then(
           (user) => {
-            this.setState({ isAuthenticated: true }, 
-              // () => {
-              // this.props.onUserChange(user);}
-              )
+            this.setState({ isAuthenticated: true 
+            })
           },
           (error) => {
             const { message, errors } = error.response.data;
@@ -99,10 +94,11 @@ class Login extends Component {
     const { isAuthenticated, errors, user, touch } =  this.state;
     
     if (isAuthenticated) {
-      return (<Redirect to="/my-profile" />)
+      return (<Redirect to="/home" />)
     }
 
     return (
+
       <div className="box mx-5">
         <div className="row">
           <div className="col-6 mt-5">
@@ -112,17 +108,17 @@ class Login extends Component {
             <form id="register-form" className="mx-5" onSubmit={this.handleSubmit}>
               <div className="form-group">
                <label className="fa fa-at">  Email</label>
-                <input type="email" name="email" className={`form-control ${touch.email && errors.email ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.email} />
-                <div className="invalid-feedback">{ errors.email }</div>
+               <input type="email" name="email" className={`form-control ${touch.email && errors.email ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.email} />
+               <div className="invalid-feedback">{ errors.email }</div>
               </div>
               <div className="form-group">
-              <label className="fa fa-key">  Password</label>
-                <input type="password" name="password" className={`form-control ${touch.password && errors.password ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.password} />
-                <div className="invalid-feedback">{ errors.password }</div>
+               <label className="fa fa-key">  Password</label>
+               <input type="password" name="password" className={`form-control ${touch.password && errors.password ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.password} />
+               <div className="invalid-feedback">{ errors.password }</div>
               </div>
-            <button className="btn btn-success" form="login-form" type="submit" disabled={!this.isValid()}> Login </button>
-            <p className="mt-4"><small>Don't have an account yet?!  You can create your account <Link to="/register-user">here</Link></small></p>
+              <button className="btn btn-success"  type="submit" disabled={!this.isValid()}> Login </button>
             </form>
+            <p className="mt-4"><small>Don't have an account yet?!  You can create your account <Link to="/register-user">here</Link></small></p>
           </div>
           <div className="col-6 mt-5">
             <h2>HELLO!!</h2>

@@ -5,10 +5,10 @@ import NavBar from './components/misc/Navbar/NavBar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Home from './components/misc/Home';
-import Car from './components/otros/Car';
-
-
+import Car from './components/maintenance/Car/Car';
 import Profile from './components/auth/Profile';
+import Alerts from './components/maintenance/Car/Alerts';
+
 import PrivateRoute from './guards/privateRoutes';
 
 import './App.css';
@@ -23,9 +23,12 @@ class App extends Component {
             <Route exact path="/register-user" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/home" component={Home} />
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/car-list" component={Car} />
-            <Redirect to="/login"/>
+
+            <Route exact path="/my-profile" component={Profile} />
+            <Route exact path="/my-cars" component={Car} />
+            <Route exact path="/alerts" component={Alerts} />
+
+            <Redirect to="/login" />
         </Switch>
       </div>
     );

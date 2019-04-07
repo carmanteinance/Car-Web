@@ -67,8 +67,7 @@ class CarForm extends Component {
       year: validations.year(),
       km: validations.km(),
     },
-    touch: {},
-    isAuthenticated: false
+    touch: {}
   }
 
  render(){
