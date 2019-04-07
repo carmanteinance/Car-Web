@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div className="row text-center mt-5">
+    <div className="row text-center mt-5 mb-5">
       <div className="col-12 mb-4">
-        <Link className="btn btn-secondary" to="/cars-list"> <i className="fa fa-car mr-2"/>  MIS COCHES</Link>
+        <Link className="btn btn-secondary" to="/my-cars"> <i className="fa fa-car mr-2"/>  MIS COCHES</Link>
       </div>
       <div className="col-12 mb-4">
         <Link className="btn btn-secondary" to="/alerts"> <i className="fa fa-exclamation-triangle mr-2"/>  ALERTAS</Link>
