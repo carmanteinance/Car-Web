@@ -5,7 +5,7 @@ import NavBar from './components/misc/Navbar/NavBar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Home from './components/misc/Home';
-import Car from './components/maintenance/Car/Car';
+import CarList from './components/maintenance/Car/CarList';
 import CarForm from './components/maintenance/Car/CarForm';
 import Profile from './components/auth/Profile';
 import Alerts from './components/maintenance/Car/Alerts';
@@ -27,7 +27,7 @@ class App extends Component {
             <Route exact path="/home" component={Home} />
 
             <Route exact path="/my-profile" component={Profile} />
-            <Route exact path="/my-cars" component={Car} />
+            <Route exact path="/my-cars" component={CarList} />
             <Route exact path="/my-cars/newCar" component={CarForm}/>
             <Route exact path="/alerts" component={Alerts} />
 
