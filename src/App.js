@@ -11,7 +11,7 @@ import Profile from './components/auth/Profile';
 import Alerts from './components/maintenance/Car/Alerts';
 import Maintenance from './components/maintenance/Maintenance/Maintenance';
 
-import PrivateRoute from './guards/privateRoutes';
+//import PrivateRoute from './guards/privateRoutes';
 
 import './App.css';
 

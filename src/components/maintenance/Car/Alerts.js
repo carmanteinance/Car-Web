@@ -7,7 +7,9 @@ class Alerts extends Component {
   render(){
 
     return(
-      <img src="../../../../public/construccion.jpg" className="rounded" alt="under construction"></img>
+      <div>
+        <img src="../../../../public/construccion.jpg" className="rounded img-wip" alt="under construction"></img>
+      </div>
     )
   }
 }
