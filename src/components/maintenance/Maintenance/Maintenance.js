@@ -49,24 +49,31 @@ const Maintenance = () => {
       <div id="accordion">
         <div className="card mt-1 mb-1">
           <div className="card-header">
-            <a className="card-link" data-toggle="collapse" href="">
-              Collapsible Group Item #1
+            <a className="card-link" data-toggle="collapse show" href="#collapseOne">
+              OIL
             </a>
           </div>
-          <div id="collapseOne" className="collapse" data-parent="#accordion">
-            <div className="card-body">
-              Lorem ipsum..
+          <div id="collapseOne" className="collapse show" data-parent="#accordion">
+            <div className="card d-flex flex-row p-3 text-black">
+              <div className="card-body">
+                <p className="card-title">Last Date Change: <span> fecha</span></p>
+                <p className="card-text">Kms last change: <span> kilometros</span></p>
+              </div>
+              <div className="card-body">
+              <p className="card-title">Next date change: <span> fecha</span></p>
+                <p className="card-text">Next kms to change: <span> kilometros</span></p>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="card mt-1 mb-1">
           <div className="card-header">
-            <a className="collapsed card-link" data-toggle="collapse" href="">
-              Collapsible Group Item #2
+            <a className="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+              FILTER OIL
             </a>
           </div>
-          <div id="collapseTwo" className="collapse" data-parent="#accordion">
+          <div id="collapseTwo" className="collapse show" data-parent="#accordion">
             <div className="card-body">
               Lorem ipsum..
             </div>
@@ -79,7 +86,7 @@ const Maintenance = () => {
               Collapsible Group Item #3
             </a>
           </div>
-          <div id="collapseThree" className="collapse" data-parent="#accordion">
+          <div id="collapseThree" className="collapse show" data-parent="#accordion">
             <div className="card-body">
               Lorem ipsum..
             </div>
