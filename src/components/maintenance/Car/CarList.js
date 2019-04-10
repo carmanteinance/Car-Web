@@ -6,13 +6,30 @@ import CarItem from './CarItem';
 
 class Car extends Component {
     componentDidMount() {
-        CarService.listCar()
-          .then(cars => this.setState({ cars }));
+        this.listAllCars()
     }
 
     state = {
       cars: []
     }
+
+    listAllCars () {
+      CarService.listCar().then((cars) => {
+        this.setState({ cars })
+      });
+    }
+    
+    deleteHandler(id) {
+      this.deleteCar(id).then(() => {
+        this.listAllCars()
+      })
+    }
+
+    deleteCar(id) {
+      return CarService.deleteCar(id)
+        .then((message => console.log(message)))
+    }
+
 
     render() {
       return(
@@ -21,15 +38,22 @@ class Car extends Component {
             <table className="table table-striped">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>BRAND</th>
                     <th>MODEL</th>
                     <th>CAR NUMBER</th>
                     <th>YEAR</th>
-                    <th>Details</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                 {this.state.cars.map(car => <CarItem key={car.id} {...car}></CarItem>)}
+                  {this.state.cars.map(car => 
+                    <CarItem 
+                      key={car.id}
+                      {...car}
+                      deleteCar={(id) => this.deleteHandler(id)}>
+                    </CarItem>)
+                  }
                 </tbody>
             </table>
             <Link className="btn btn-outline-primary btn-block" to="/my-cars/newCar"> <i className="fa fa-car mr-2"/>+ <strong>  ADD CAR</strong></Link>

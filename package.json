@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd-mobile": "^2.2.11",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "bulma": "^0.7.4",
