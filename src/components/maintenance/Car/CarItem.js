@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CarItem = ({ brand, model, carNumber, year, id, deleteCar }) => {
+
+  // {year.getDay()}{year.getMonth()}{year.getFullYear()}
+
   return (
     <tr>
       <td>
