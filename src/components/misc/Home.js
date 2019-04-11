@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { withAuthConsumer } from '../../contexts/AuthStore';
+
 
 const Home = () => {
   return (
@@ -17,4 +19,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default withAuthConsumer(Home)

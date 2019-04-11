@@ -2,20 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'font-awesome/css/font-awesome.min.css';
 import './index.css';
+
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-// import { AuthStore } from './contexts/AuthStore';
+import { AuthStore } from './contexts/AuthStore';
 import * as serviceWorker from './serviceWorker';
 
 
 
 ReactDOM.render(
   <BrowserRouter>
-    {/* <AuthStore> */}
+    <AuthStore>
       <App />
-    {/* </AuthStore> */}
+    </AuthStore>
   </BrowserRouter>, 
   document.getElementById('root'));
 

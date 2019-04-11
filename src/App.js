@@ -23,12 +23,12 @@ class App extends Component {
         <Switch>
             <Route exact path="/register-user" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/home" component={Home} />
 
+            <Route exact path="/home" component={Home} />
             <Route exact path="/my-profile" component={Profile} />
             <Route exact path="/my-cars" component={CarList} />
             <Route exact path="/my-cars/newCar" component={CarForm}/>
-            <Route exact path="/alerts" component={Alerts} />
+            <PrivateRoute exact path="/alerts" component={Alerts} />
 
             <Redirect to="/login" />
         </Switch>

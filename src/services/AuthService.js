@@ -7,7 +7,6 @@ const register = user => http.post('/register-user', user)
 
 const authenticate = (user) => http.post('/login', user)
   .then(response => {
-    console.log('esto es la response', response)
     return response.data
   });
 
@@ -17,12 +16,7 @@ const getProfile = () => http.get('/my-profile')
 
 
 const updateProfile = (user) => {
-  const data = new FormData();
-  Object.keys(user).forEach(prop => {
-    if (prop === 'password' && user.password === '') return;
-    data.append(prop, user[prop]) //que es?
-  });
-  return http.put('/profile', data)
+  return http.put('/profile', user)
     .then(res => Promise.resolve(res.data));
 }
 
@@ -32,5 +26,7 @@ const logout = (user) => http.post('/logout')
 export default {
   authenticate,
   register,
+  getProfile,
+  updateProfile,
   logout
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import authService from '../../services/AuthService';
 import { Redirect, Link } from 'react-router-dom';
-//import { withAuthConsumer } from '../../contexts/AuthStore';
+import { withAuthConsumer } from '../../contexts/AuthStore';
 
 
 const validations = {
@@ -131,4 +131,5 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+export default withAuthConsumer(Login)
+
