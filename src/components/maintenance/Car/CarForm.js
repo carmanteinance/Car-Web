@@ -78,16 +78,33 @@ class CarForm extends Component {
       lastITV: validations.lastITV()
     },
     marcas: Object.keys(carModels),
-    saved: false
+    saved: false,
+    touch: {},
+    backError:""
   };
 
+  handleBlur = (event) => {
+    const { name } = event.target;
+    this.setState({
+      touch: {
+        ...this.state.touch,
+        [name]: true
+      }
+    }, () => console.log(this.state))
+  }
+
   handleChange = event => {
+    console.log(this.state)
     const { name, value } = event.target;
     this.setState(
       {
         car: {
           ...this.state.car,
           [name]: value
+        },
+        errors: {
+          ...this.state.errors,
+          [name]: validations[name] && validations[name](value)
         }
       },
     );
@@ -101,13 +118,12 @@ class CarForm extends Component {
           { car: { ...this.state.car, ...car }, saved: true },
         ),
       error => {
-        const errors = error.response.data;
+        const { message } = error.response.data;
+        console.log(message);
         this.setState({
-          errors: {
-            ...this.state.errors,
-            ...errors
-          }
-        });
+          backError: message
+          },
+        );
       }
     );
   };
@@ -121,9 +137,7 @@ class CarForm extends Component {
       <div className="jumbotron ">
         <form className="form-group" onSubmit={this.handleSubmit}>
           <label htmlFor="sel1">Brand:</label>
-          <select
-            onChange={this.handleChange}
-            className="form-control"
+          <select onChange={this.handleChange} className="form-control"
             name="brand"
             id="sel1"
           >
@@ -133,14 +147,14 @@ class CarForm extends Component {
               </option>
             ))}
           </select>
-          <div className="invalid-feedback">{ this.state.errors.brand }</div>
+          <div className="invalid-feedback">{ this.state.touch.brand && this.state.errors.brand }</div>
           <label htmlFor="sel1 mt-4 mb-3">Model:</label>
-          <select className="form-control" id="sel1" name="model" onChange={this.handleChange}>
+          <select className="form-control" id="sel1" name="model" onChange={this.handleChange } onBlur={this.handleBlur}>
             {(carModels[this.state.car.brand] || []).map((m, i) => (
               <option key={i}>{m}</option>
             ))}
           </select>
-          <div className="invalid-feedback">{ this.state.errors.model }</div>
+          <div className="invalid-feedback">{ this.state.touch.model &&this.state.errors.model }</div>
           <div className="engine-select mt-2">
             {engineType.map(engine => (
               <label key={engine} className="radio-inline mx-2">
@@ -150,69 +164,75 @@ class CarForm extends Component {
                   checked={this.state.car.engine === engine}
                   value={engine}
                   onChange={this.handleChange}
+                  onBlur={this.handleBlur}
                 />{" "}
                 {engine}
               </label>
             ))}
           </div>
-          <div className="invalid-feedback">{ this.state.errors.engine }</div>
+          <div className="invalid-feedback">{ this.state.touch.engine && this.state.errors.engine }</div>
           <label htmlFor="car-number" className="mr-sm-2 mt-2">
             Car Number:
           </label>
           <input
             type="car-number"
-            className="form-control mb-2 mr-sm-2"
+            className={`form-control ${this.state.touch.carNumber && this.state.errors.carNumber && 'is-invalid'}  mb-2 mr-sm-2`}
             id="car-number"
             placeholder="1234-XXX"
             name="carNumber"
             value={this.state.carNumber}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
           />
-          <div className="invalid-feedback">{ this.state.errors.carNumber }</div>
+          <div className="invalid-feedback">{ this.state.touch.carNumber &&this.state.errors.carNumber }</div>
           <label htmlFor="year" className="mr-sm-2 mt-2">
             Year:
           </label>
           <input
             type="year"
-            className="form-control mb-2 mr-sm-2"
+            className={`form-control ${this.state.touch.year && this.state.errors.year && 'is-invalid'}  mb-2 mr-sm-2`}
             id="year"
             name="year"
             placeholder="2000"
             value={this.state.year}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
           />
-          <div className="invalid-feedback">{ this.state.errors.year }</div>
+          <div className="invalid-feedback">{ this.state.touch.year &&this.state.errors.year }</div>
           <label htmlFor="km" className="mr-sm-2 mt-2">
             Kilometers:
           </label>
           <input
             type="km"
-            className="form-control mb-2 mr-sm-2"
+            className={`form-control ${this.state.touch.km && this.state.errors.km && 'is-invalid'}  mb-2 mr-sm-2`}
             id="km"
             name="km"
             placeholder="23189"
             value={this.state.km}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
           />
-          <div className="invalid-feedback">{ this.state.errors.km }</div>
+          <div className="invalid-feedback">{ this.state.touch.km && this.state.errors.km }</div>
           <label htmlFor="lastITV" className="mr-sm-2 mt-2">
-            Last Yeat ITV done:
+            Last Year ITV done:
           </label>
           <input
             type="lastITV"
-            className="form-control mb-2 mr-sm-2"
+            className={`form-control ${this.state.touch.lastITV && this.state.errors.lastITV && 'is-invalid'}  mb-2 mr-sm-2`}
             id="lastITV"
             name="lastITV"
             placeholder="1998"
             value={this.state.lastITV}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
           />
-          <div className="invalid-feedback">{ this.state.errors.lastITV }</div>
+          <div className="invalid-feedback">{ this.state.touch.lastITV &&this.state.errors.lastITV }</div>
           <div className="submit-button col-12">
             <button type="submit" className="btn btn-success mb-2 mt-5">
               Submit <i className="fa fa-check ml-3" />
             </button>
           </div>
+          {this.state.backError && <div>{this.state.backError}</div>}
         </form>
       </div>
     );
