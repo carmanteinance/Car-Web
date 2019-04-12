@@ -10,6 +10,7 @@ import CarForm from './components/maintenance/Car/CarForm';
 import Profile from './components/auth/Profile';
 import Alerts from './components/maintenance/Car/Alerts';
 import Maintenance from './components/maintenance/Maintenance/Maintenance';
+import Talleres from './components/maintenance/Car/Talleres'
 
 import PrivateRoute from './guards/privateRoutes';
 
@@ -32,6 +33,7 @@ class App extends Component {
             <PrivateRoute exact path="/alerts" component={Alerts} />
 
             <PrivateRoute exact path="/maintenance" component={Maintenance} />
+            <PrivateRoute exact path="/talleres" component={Talleres} />
 
             <Redirect to="/login" />
         </Switch>
