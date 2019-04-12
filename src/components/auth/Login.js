@@ -1,43 +1,41 @@
-import React, { Component } from 'react'
-import authService from '../../services/AuthService';
-import { Redirect, Link } from 'react-router-dom';
-import { withAuthConsumer } from '../../contexts/AuthStore';
-
+import React, { Component } from "react";
+import authService from "../../services/AuthService";
+import { Redirect, Link } from "react-router-dom";
+import { withAuthConsumer } from "../../contexts/AuthStore";
 
 const validations = {
-  email: (value) => {
+  email: value => {
     let message;
     if (!value) {
-      message = 'Email or Password invalid';
-      }
+      message = "Email or Password invalid";
+    }
     return message;
   },
-  password: (value) => {
+  password: value => {
     let message;
-    if (!value === '') {
-      message = 'Email or Password invalid';
+    if (!value === "") {
+      message = "Email or Password invalid";
     }
-      return message;
+    return message;
   }
-}
-
+};
 
 class Login extends Component {
-
+  
   state = {
     user: {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     },
     errors: {
       email: validations.email(),
-      password: validations.password(),
+      password: validations.password()
     },
     touch: {},
     isAuthenticated: false
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { name, value } = event.target;
     this.setState({
       user: {
@@ -48,88 +46,125 @@ class Login extends Component {
         ...this.state.errors,
         [name]: validations[name] && validations[name](value)
       }
-    })
-  }
+    });
+  };
 
-  handleBlur = (event) => {
+  handleBlur = event => {
     const { name } = event.target;
     this.setState({
       touch: {
         ...this.state.touch,
         [name]: true
       }
-    })
-  }
+    });
+  };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     if (this.isValid()) {
-      authService.authenticate(this.state.user)
-        .then(
-          (user) => {
-            this.setState({ isAuthenticated: true 
-            })
-          },
-          (error) => {
-            const { message, errors } = error.response.data;
-            this.setState({
-              errors: {
-                ...this.state.errors,
-                ...errors,
-                password: !errors && message
-              }
-            })
-          }
-        )
+      authService.authenticate(this.state.user).then(
+        user => {
+          this.props.onUserChanged(user);
+          this.setState({ isAuthenticated: true });
+        },
+        error => {
+          const { message, errors } = error.response.data;
+          this.setState({
+            errors: {
+              ...this.state.errors,
+              ...errors,
+              password: !errors && message
+            }
+          });
+        }
+      );
     }
-  }
+  };
 
   isValid = () => {
-    return !Object.keys(this.state.user)
-      .some(attr => this.state.errors[attr])
-  }
+    return !Object.keys(this.state.user).some(attr => this.state.errors[attr]);
+  };
 
   render() {
+    const { isAuthenticated, errors, user, touch } = this.state;
 
-    const { isAuthenticated, errors, user, touch } =  this.state;
-    
     if (isAuthenticated) {
-      return (<Redirect to="/home" />)
+      return <Redirect to="/home" />;
     }
 
     return (
-
       <div className="box mx-5">
         <div className="row">
           <div className="col-6 mt-5">
             <div className="text-center">
               <h3>LOG IN</h3>
-            </div >
-            <form id="register-form" className="mx-5" onSubmit={this.handleSubmit}>
+            </div>
+            <form
+              id="register-form"
+              className="mx-5"
+              onSubmit={this.handleSubmit}
+            >
               <div className="form-group">
-               <label className="fa fa-at">  Email</label>
-               <input type="email" name="email" className={`form-control ${touch.email && errors.email ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.email} />
-               <div className="invalid-feedback">{ errors.email }</div>
+                <label className="fa fa-at"> Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  className={`form-control ${
+                    touch.email && errors.email ? "is-invalid" : ""
+                  }`}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  value={user.email}
+                />
+                <div className="invalid-feedback">{errors.email}</div>
               </div>
               <div className="form-group">
-               <label className="fa fa-key">  Password</label>
-               <input type="password" name="password" className={`form-control ${touch.password && errors.password ? 'is-invalid' : ''}`} onChange={this.handleChange} onBlur={this.handleBlur} value={user.password} />
-               <div className="invalid-feedback">{ errors.password }</div>
+                <label className="fa fa-key"> Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  className={`form-control ${
+                    touch.password && errors.password ? "is-invalid" : ""
+                  }`}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  value={user.password}
+                />
+                <div className="invalid-feedback">{errors.password}</div>
               </div>
-              <button className="btn btn-success"  type="submit" disabled={!this.isValid()}> Login </button>
+              <button
+                className="btn btn-success"
+                type="submit"
+                disabled={!this.isValid()}
+              >
+                {" "}
+                Login{" "}
+              </button>
             </form>
-            <p className="mt-4"><small>Don't have an account yet?!  You can create your account <Link to="/register-user">here</Link></small></p>
+            <p className="mt-4">
+              <small>
+                Don't have an account yet?! You can create your account{" "}
+                <Link to="/register-user">here</Link>
+              </small>
+            </p>
           </div>
           <div className="col-6 mt-5">
             <h2>HELLO!!</h2>
-            <p className="lead mt-4 mb-2">CarCare is an application that will help you keep track of your car's maintenance</p>
-            <p className="mt-2"><small>If you want to have an account, click below </small></p>
-            <Link className="btn btn-primary" to="/register-user"> <i className="fa fa-hand-point-right mr-2"/>  I want an ACCOUNT</Link>
+            <p className="lead mt-4 mb-2">
+              CarCare is an application that will help you keep track of your
+              car's maintenance
+            </p>
+            <p className="mt-2">
+              <small>If you want to have an account, click below </small>
+            </p>
+            <Link className="btn btn-primary" to="/register-user">
+              {" "}
+              <i className="fa fa-hand-point-right mr-2" /> I want an ACCOUNT
+            </Link>
           </div>
         </div>
       </div>
     );
   }
 }
-export default withAuthConsumer(Login)
-
+export default withAuthConsumer(Login);

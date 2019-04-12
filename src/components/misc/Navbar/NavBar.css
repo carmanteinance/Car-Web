@@ -15,3 +15,8 @@
 .nav-link {
   color: white !important;
 }
+
+.button-black{
+  background-color: black;
+  border: none
+}

@@ -20,7 +20,7 @@ const updateProfile = (user) => {
     .then(res => Promise.resolve(res.data));
 }
 
-const logout = (user) => http.post('/logout')
+const logout = () => http.get('/logout')
   .then(response => response.data);
 
 export default {
