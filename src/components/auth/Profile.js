@@ -5,20 +5,22 @@ import { withAuthConsumer } from "../../contexts/AuthStore.js";
 // eslint-disable-next-line no-useless-escape
 const PASSWORD_PATTERN = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 
-const validations = {password: (value) => {
-  let message;
-  if (!value) {
-    message = 'Password is required';
-  }else if (!PASSWORD_PATTERN.test(value)) {
-    message = 'The password must contain at least 6 characters, 1 lowercase, 1 uppercase and one number';
-  }
-  return message;
-},
+const validations = {
+  password: (value) => {
+    let message;
+    if (!value) {
+      message = 'Password is required';
+    }else if (!PASSWORD_PATTERN.test(value)) {
+      message = 'The password must contain at least 6 characters, 1 lowercase, 1 uppercase and one number';
+    }
+    return message;
+  },
 };
 
 class Profile extends Component {
   state = {
     user: {
+      email:"",
       name: "",
       password: ""
     },
@@ -37,7 +39,7 @@ class Profile extends Component {
       },
       errors: {
         ...this.state.errors,
-        [name]: validations[name] && validations[name](value)
+        password: validations.password && validations.password(value)
       }
     });
   };
@@ -55,7 +57,8 @@ class Profile extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.isValid()) {
-      authService.updateProfile(this.state.user).then(
+      authService.updateProfile(this.state.user)
+      .then(
         user => this.setState({ user: { ...this.state.user, ...user } }),
         error => {
           const { message, errors } = error.response.data;
@@ -112,18 +115,16 @@ class Profile extends Component {
                 />
               </div>
               <div className="form-group">
-                <label> User Name</label>
+                <label>User Name</label>
                 <input
                   type="name"
                   name="name"
-                  className={`form-control ${
-                    touch.name && errors.name ? "is-invalid" : ""
-                  }`}
+                  className="form-control"
                   onChange={this.handleChange}
                   onBlur={this.handleBlur}
                   value={user.name}
                 />
-                <div className="invalid-feedback">{errors.password}</div>
+                <div className="invalid-feedback">{errors.name}</div>
               </div>
 
               <div className="form-group">
