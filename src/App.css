@@ -15,3 +15,11 @@
     width: 100%;
   }
 } */
+
+.wip{
+  background-image: url("./construccion.jpg");
+  background-repeat: no-repeat;
+  height: 500px; 
+  background-position: center; /* Center the image */
+  background-size: contain;
+}
