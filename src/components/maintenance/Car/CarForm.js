@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import carService from "../../../services/CarService";
-import DDBBCars from "./BBDD_Cars";
+import carModels from "./CarModels";
 
 const engineType = ["Gasoline", "Diesel", "Hybrid", "Electric"];
 
@@ -47,30 +47,37 @@ const validations = {
       message = "Enter the actual car´s KMs";
     }
     return message;
+  },
+  lastITV: value => {
+    let message;
+    if (!value || value === "") {
+      message = "Enter the last time the Car passed the ITV";
+    }
+    return message;
   }
 };
 
 class CarForm extends Component {
   state = {
     car: {
-      brand: "",
+      brand: "BMW",
       model: "",
       carNumber: "",
       engine: "",
       year: "",
-      km: ""
+      km: "",
+      lastITV: ""
     },
-
     errors: {
       brand: validations.brand(),
       model: validations.model(),
       carNumber: validations.carNumber(),
       engine: validations.engine(),
       year: validations.year(),
-      km: validations.km()
+      km: validations.km(),
+      lastITV: validations.lastITV()
     },
-    marcas: Object.keys(DDBBCars.carsModels),
-    modelos: "",
+    marcas: Object.keys(carModels),
     saved: false
   };
 
@@ -83,18 +90,15 @@ class CarForm extends Component {
           [name]: value
         }
       },
-      console.log("campo", name, "valor", value)
     );
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("pre then", this.state.car);
     carService.addCar(this.state.car).then(
       car =>
         this.setState(
           { car: { ...this.state.car, ...car }, saved: true },
-          console.log("post then", this.state.car)
         ),
       error => {
         const errors = error.response.data;
@@ -107,17 +111,9 @@ class CarForm extends Component {
       }
     );
   };
-  // handleChangeMarca(event) {
-  //   console.log("Esto es lo select:", event.target.value)
-  //   this.setState({marca: event.target.value});
-  // }
-
-  //  getModelo () {
-  //    console.log ("Que es",Object.keys(DDBBCars.carsModels[this.state.marcas]) )
-  //   }
 
   render() {
-    if (this.saved) {
+    if (this.state.saved) {
       return <Redirect to="/my-cars" />;
     }
 
@@ -137,22 +133,15 @@ class CarForm extends Component {
               </option>
             ))}
           </select>
-          <label htmlFor="sel1">Model:</label>
-          <input
-            type="model"
-            className="form-control mb-2 mr-sm-2"
-            id="model"
-            name="model"
-            value={this.state.model}
-            onChange={this.handleChange}
-          />
-          {/* <select className="form-control" id="sel1">
-          {
-            this.modelos.map((modelo, index) => (
-            <option key={index}>{modelo}</option>
-          ))}
-          </select> */}
-          <div className="engine-select">
+          <div className="invalid-feedback">{ this.state.errors.brand }</div>
+          <label htmlFor="sel1 mt-4 mb-3">Model:</label>
+          <select className="form-control" id="sel1" name="model" onChange={this.handleChange}>
+            {(carModels[this.state.car.brand] || []).map((m, i) => (
+              <option key={i}>{m}</option>
+            ))}
+          </select>
+          <div className="invalid-feedback">{ this.state.errors.model }</div>
+          <div className="engine-select mt-2">
             {engineType.map(engine => (
               <label key={engine} className="radio-inline mx-2">
                 <input
@@ -166,7 +155,8 @@ class CarForm extends Component {
               </label>
             ))}
           </div>
-          <label htmlFor="car-number" className="mr-sm-2">
+          <div className="invalid-feedback">{ this.state.errors.engine }</div>
+          <label htmlFor="car-number" className="mr-sm-2 mt-2">
             Car Number:
           </label>
           <input
@@ -178,7 +168,8 @@ class CarForm extends Component {
             value={this.state.carNumber}
             onChange={this.handleChange}
           />
-          <label htmlFor="year" className="mr-sm-2">
+          <div className="invalid-feedback">{ this.state.errors.carNumber }</div>
+          <label htmlFor="year" className="mr-sm-2 mt-2">
             Year:
           </label>
           <input
@@ -190,7 +181,8 @@ class CarForm extends Component {
             value={this.state.year}
             onChange={this.handleChange}
           />
-          <label htmlFor="km" className="mr-sm-2">
+          <div className="invalid-feedback">{ this.state.errors.year }</div>
+          <label htmlFor="km" className="mr-sm-2 mt-2">
             Kilometers:
           </label>
           <input
@@ -202,6 +194,20 @@ class CarForm extends Component {
             value={this.state.km}
             onChange={this.handleChange}
           />
+          <div className="invalid-feedback">{ this.state.errors.km }</div>
+          <label htmlFor="lastITV" className="mr-sm-2 mt-2">
+            Last Yeat ITV done:
+          </label>
+          <input
+            type="lastITV"
+            className="form-control mb-2 mr-sm-2"
+            id="lastITV"
+            name="lastITV"
+            placeholder="1998"
+            value={this.state.lastITV}
+            onChange={this.handleChange}
+          />
+          <div className="invalid-feedback">{ this.state.errors.lastITV }</div>
           <div className="submit-button col-12">
             <button type="submit" className="btn btn-success mb-2 mt-5">
               Submit <i className="fa fa-check ml-3" />

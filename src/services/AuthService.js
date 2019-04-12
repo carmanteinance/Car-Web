@@ -16,7 +16,7 @@ const getProfile = () => http.get('/my-profile')
 
 
 const updateProfile = (user) => {
-  return http.put('/profile', user)
+  return http.put('/my-profile', user)
     .then(res => Promise.resolve(res.data));
 }
 

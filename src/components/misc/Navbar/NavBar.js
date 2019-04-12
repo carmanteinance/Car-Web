@@ -26,15 +26,17 @@ class NavBar extends Component {
             <a className="nav-link fa fa-home" href="/home"> Home <span className="sr-only">(current)</span></a>
             <a className="nav-link fa fa-user-circle" href="/my-profile"> Profile </a>
             <a className="nav-link fa fa-car" href="/my-cars"> My Cars</a>
-            <button className="nav-link fa fa-sign-out-alt button-black" href="/logout" onChange={this.handleLogout}> Logout</button>
+            <button className="nav-link fa fa-sign-out-alt button-black" href="/logout" onClick={this.handleLogout}> Logout</button>
           </div>
         </Fragment>
       }
       {!isAuthenticated() &&
         <Fragment>
           <h3>CarCare</h3>
-          <a className="nav-link fa fa-user-circle" href="/loging"> Login </a>
-          <a className="nav-link fa fa-car" href="/register"> Register</a>
+          <div className="menu">
+          <a className="nav-link" href="/loging"> Login </a>
+          <a className="nav-link" href="/register"> Register</a>
+          </div>
         </Fragment>
       }
     </nav>
