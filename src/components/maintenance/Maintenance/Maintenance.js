@@ -1,15 +1,36 @@
 import React, { Component } from "react";
+import CarService from "../../../services/CarService"
+import queryString from 'query-string'
 import CarForm from "../Car/CarForm";
+
+const typeEvents = ["Oil", "Filter Oil", "BreaksKit", "AC", "Tires", "Air Filter", "Battery", "Suspension", "Chain", "Coolant", "Plugs", "Heaters", "Battery Coolant"];
+
 
 class Maintenance extends Component {
 
   state = {
+    maintenance:[],
     isModalOpen: false,
-    isModalClose: false
+    isCollapseOpen: false,
   };
-  
+
   handleOpenModal = () => this.setState({ isModalOpen: true });
   handleCloseModal = () => this.setState({ isModalOpen: false});
+
+  handleOpenCollapse = () => this.setState({ isCollapseOpen: true });
+  handleCloseCollapse = () => this.setState({ isCollapseOpen: false});
+
+//   componentDidMount() {
+//     const query = queryString.parseUrl(this.location.search)
+//     console.log("Esto es..", query)
+//    // this.listOneCar(values.id)
+// }
+
+  listAllCars () {
+    CarService.listOneCar().then((maintenance) => {
+      this.setState({ maintenance })
+    });
+  }
 
   render() {
     return (
@@ -63,7 +84,7 @@ class Maintenance extends Component {
                     </div>
 
                     {/* <!-- Modal footer --> */}
-                    <div classNameName="modal-footer .modal-sm">
+                    <div className="modal-footer .modal-sm">
                       <button
                         type="button"
                         className="btn btn-success"
@@ -80,22 +101,32 @@ class Maintenance extends Component {
         </div>
 
         <div id="accordion">
-          <div className="card mt-1 mb-1">
+         {typeEvents.map( (event, index) => (
+          <div className="card mt-1 mb-1" key={index}>
             <div className="card-header">
               <a
-                className="card-link"
-                data-toggle="collapse show"
+                className="card-link text-center"
+                data-toggle={`collapse ${this.state.isCollapseOpen && 'show'} `}
                 href="#collapseOne"
+                onClick={this.handleOpenCollapse}
               >
-                OIL
+                {event}
               </a>
             </div>
             <div
               id="collapseOne"
-              className="collapse show"
-              data-parent="#accordion"
+              className={`collapse ${this.state.isCollapseOpen && 'show'} `}
+              data-parent="#accordion"        
             >
               <div className="card d-flex flex-row p-3 text-black">
+              <button
+                        type="button"
+                        className="close"
+                        data-dismiss="collapse"
+                        onClick={this.handleCloseCollapse}
+                      >
+                        &times;
+                      </button>
                 <div className="card-body">
                   <p className="card-title">
                     Last Date Change: <span> fecha</span>
@@ -115,40 +146,7 @@ class Maintenance extends Component {
               </div>
             </div>
           </div>
-
-          <div className="card mt-1 mb-1">
-            <div className="card-header">
-              <a
-                className="collapsed card-link"
-                data-toggle="collapse"
-                href="#collapseTwo"
-              >
-                FILTER OIL
-              </a>
-            </div>
-            <div
-              id="collapseTwo"
-              className="collapse show"
-              data-parent="#accordion"
-            >
-              <div className="card-body">Lorem ipsum..</div>
-            </div>
-          </div>
-
-          <div className="card mt-1 mb-1">
-            <div className="card-header">
-              <a className="collapsed card-link" data-toggle="collapse" href="">
-                Collapsible Group Item #3
-              </a>
-            </div>
-            <div
-              id="collapseThree"
-              className="collapse show"
-              data-parent="#accordion"
-            >
-              <div className="card-body">Lorem ipsum..</div>
-            </div>
-          </div>
+         ))}
         </div>
       </div>
     );

@@ -16,14 +16,10 @@ const addCar = car =>
   http.post("/my-cars/newCar ", car)
     .then(response => response.data);
 
-// const updateProfile = (user) => {
-//   const data = new FormData();
-//   Object.keys(user).forEach(prop => {
-//     data.append(prop, user[prop]) //que es?
-//   });
-//   return http.put('/my-cars/edit/:id', data)
-//     .then(res => Promise.resolve(res.data));
-// }
+const updateCar = (car) => {
+  return http.put('/my-cars/edit/:id', car)
+    .then(res => Promise.resolve(res.data));
+}
 
 const deleteCar = id =>
   http.delete(`/my-cars/delete/${id}`)
@@ -34,6 +30,6 @@ export default {
   listCar,
   listOneCar,
   addCar,
-  //updateProfile,
+  updateCar,
   deleteCar
 };

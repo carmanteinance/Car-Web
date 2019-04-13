@@ -32,7 +32,7 @@ class App extends Component {
             <PrivateRoute exact path="/my-cars/newCar" component={CarForm}/>
             <PrivateRoute exact path="/alerts" component={Alerts} />
 
-            <PrivateRoute exact path="/maintenance" component={Maintenance} />
+            <PrivateRoute path="/maintenance/:id" component={Maintenance} />
             <PrivateRoute exact path="/talleres" component={Talleres} />
 
             <Redirect to="/login" />
