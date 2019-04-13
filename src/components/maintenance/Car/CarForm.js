@@ -90,11 +90,10 @@ class CarForm extends Component {
         ...this.state.touch,
         [name]: true
       }
-    }, () => console.log(this.state))
+    })
   }
 
   handleChange = event => {
-    console.log(this.state)
     const { name, value } = event.target;
     this.setState(
       {
@@ -119,7 +118,6 @@ class CarForm extends Component {
         ),
       error => {
         const { message } = error.response.data;
-        console.log(message);
         this.setState({
           backError: message
           },
