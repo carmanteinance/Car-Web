@@ -8,8 +8,8 @@ const listCar = () =>
   http.get("/my-cars")
     .then(res => Promise.resolve(res.data));
 
-const listOneCar = () =>
-  http.get("/my-cars/:id")
+const listOneCar = (id) =>
+  http.get(`/my-cars/${id}`)
     .then(res => Promise.resolve(res.data));
 
 const addCar = car =>

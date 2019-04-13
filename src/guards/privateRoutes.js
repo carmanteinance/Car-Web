@@ -9,7 +9,6 @@ const PrivateRoute = ({
   role,
   ...rest
 }) => {
-  console.log(rest);
   if (!isAuthenticated()) {
     return <Redirect to="/login" />;
   }
